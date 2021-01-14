@@ -6,6 +6,7 @@ import android.media.MediaFormat
 import android.util.Log
 import android.view.Surface
 import java.io.IOException
+import java.nio.ByteBuffer
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -29,18 +30,107 @@ class Decoder {
 
     fun start() {
         if (!isWorking.get()) {
+            isWorking.set(true)
             decodeThread.start()
         }
     }
 
     fun stop() {
-    }
-
-    fun release() {
+        if (isWorking.get()) {
+            isWorking.set(false);
+        }
     }
 
 
     private fun decodeRunnable() {
+        // create the MediaCodec first
+        if (null == mediaCodec) {
+            createMediaCodec()
+        }
+        // check again
+        if (null == mediaCodec || null == extractor) {
+            Log.e(TAG, "create MediaExtractor and MediaCodec failed")
+            return
+        }
+
+        var startTime: Long = System.currentTimeMillis()
+        val bufferInfo = MediaCodec.BufferInfo()
+        var eof = false
+
+        while (true) {
+            if (null == mediaCodec || null == extractor) {
+                Log.e(TAG, "MediaCodec or MediaExtractor is null")
+                break
+            }
+
+            if (!eof) {
+                val inputIndex: Int = mediaCodec!!.dequeueInputBuffer(10000)
+                if (inputIndex < 0) {
+                    //Log.w(TAG, "dequeueInputBuffer failed index=$inputIndex")
+                } else {
+                    val buffer: ByteBuffer? = mediaCodec!!.getInputBuffer(inputIndex)
+                    if (null != buffer) {
+                        val sampleSize = extractor!!.readSampleData(buffer, 0)
+                        if (sampleSize < 0) {
+                            mediaCodec!!.queueInputBuffer(inputIndex, 0, 0, 0, MediaCodec.BUFFER_FLAG_END_OF_STREAM)
+                            eof = true
+                            Log.i(TAG, "queueInputBuffer: End of stream")
+                        } else {
+                            mediaCodec!!.queueInputBuffer(inputIndex, 0, sampleSize, extractor!!.sampleTime, 0)
+                            extractor!!.advance()
+                        }
+
+                    } else {
+                        Log.w(TAG, "getInputBuffer($inputIndex) failed");
+                    }
+                }
+            }
+
+            val outputIndex = mediaCodec!!.dequeueOutputBuffer(bufferInfo, 10000)
+            if (outputIndex < 0) {
+                when (outputIndex) {
+                    MediaCodec.INFO_OUTPUT_FORMAT_CHANGED -> {
+                        Log.w(TAG, "Output format changed, new format:${mediaCodec?.outputFormat}")
+                    }
+                    MediaCodec.INFO_TRY_AGAIN_LATER -> {
+                        Log.w(TAG, "dequeueOutputBuffer: Time out, try again")
+                    }
+                    else -> {
+                        Log.w(TAG, "dequeueOutputBuffer: unknown failed, index=$outputIndex")
+                    }
+                }
+            }
+            // good data
+            else {
+                val byteBuffer = mediaCodec!!.getOutputBuffer(outputIndex)
+                if (null == byteBuffer) {
+                    Log.w(TAG, "getOutputBuffer($outputIndex) failed")
+                } else {
+                    mediaCodec?.releaseOutputBuffer(outputIndex, true)
+                }
+            }
+
+            // All decoded frames have been rendered, we can stop playing now
+
+            // All decoded frames have been rendered, we can stop playing now
+            if (bufferInfo.flags and MediaCodec.BUFFER_FLAG_END_OF_STREAM != 0) {
+                Log.d(TAG, "OutputBuffer BUFFER_FLAG_END_OF_STREAM")
+                break
+            }
+
+            if (!isWorking.get()) {
+                break
+            }
+        }
+
+
+        // release the resource
+        extractor?.release()
+        extractor = null
+
+        mediaCodec?.stop()
+        mediaCodec?.release()
+        mediaCodec = null
     }
 
 

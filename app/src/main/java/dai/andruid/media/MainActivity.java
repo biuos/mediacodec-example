@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import dai.andruid.media.decode.Decoder;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String VideoFile = "/sdcard/v1080.mp4";
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private SurfaceView surfaceView;
     private MediaCodecPlayer player;
     private boolean permission = false;
+    private Decoder decoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +33,27 @@ public class MainActivity extends AppCompatActivity {
         surfaceView.getHolder().addCallback(callback);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != decoder) {
+            decoder.stop();
+            decoder = null;
+        }
+    }
+
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            if (null == player) {
-                player = new MediaCodecPlayer(VideoFile, holder.getSurface());
-                player.start();
+//            if (null == player) {
+//                player = new MediaCodecPlayer(VideoFile, holder.getSurface());
+//                player.start();
+//            }
+            if (null == decoder) {
+                decoder = new Decoder();
+                decoder.setDataSource(VideoFile);
+                decoder.setSurface(holder.getSurface());
+                decoder.start();
             }
         }
 
@@ -46,8 +64,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void surfaceDestroyed(SurfaceHolder holder) {
-            if (null != player) {
-                player.stop();
+//            if (null != player) {
+//                player.stop();
+//            }
+
+            if (null != decoder) {
+                decoder.stop();
             }
         }
     };
