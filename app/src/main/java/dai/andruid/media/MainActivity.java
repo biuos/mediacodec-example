@@ -1,4 +1,4 @@
-package dai.android.example.codec;
+package dai.andruid.media;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -12,7 +12,7 @@ import android.view.SurfaceView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String VideoFile = "/sdcard/pptv-sport.mp4";
+    private static final String VideoFile = "/sdcard/v1080.mp4";
     private static final int PERMISSION_EXTERNAL_STORAGE = 1;
 
     private SurfaceView surfaceView;

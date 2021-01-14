@@ -1,4 +1,4 @@
-package dai.android.example.codec;
+package dai.android.example.media;
 
 import android.content.Context;
 
