@@ -10,17 +10,17 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import dai.andruid.media.decode.Decoder;
+import dai.andruid.media.decode.Decoder1;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String VideoFile = "/sdcard/v1080.mp4";
+    private static final String VideoFile = "/sdcard/gangtiexia_yugao.mp4";
     private static final int PERMISSION_EXTERNAL_STORAGE = 1;
 
     private SurfaceView surfaceView;
     private MediaCodecPlayer player;
     private boolean permission = false;
-    private Decoder decoder;
+    private Decoder1 decoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +50,14 @@ public class MainActivity extends AppCompatActivity {
 //                player.start();
 //            }
             if (null == decoder) {
-                decoder = new Decoder();
+                decoder = new Decoder1();
                 decoder.setDataSource(VideoFile);
                 decoder.setSurface(holder.getSurface());
                 decoder.start();
+            }
+
+            if (surfaceView != null) {
+                surfaceView.setKeepScreenOn(true);
             }
         }
 
@@ -70,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
             if (null != decoder) {
                 decoder.stop();
+            }
+
+            if (surfaceView != null) {
+                surfaceView.setKeepScreenOn(false);
             }
         }
     };

@@ -5,13 +5,24 @@ import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.util.Log
 import android.view.Surface
+import dai.andruid.media.SpeedController
 import java.io.IOException
 import java.nio.ByteBuffer
-import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
+// Android——使用MediaExtractor获取关键帧的时间戳
+// https://blog.csdn.net/m0_37602827/article/details/109302139
 
-class Decoder {
+// MediaCodec解码aac,播放
+// https://blog.csdn.net/coloriy/article/details/60579451
+
+
+// MediaCodec 解析MP4 并自行播放video和audio
+// https://www.jianshu.com/p/b625dba0399a?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+
+//
+
+class Decoder1 {
 
     private data class ExtractorInfo(
             var mime: String,
@@ -19,6 +30,7 @@ class Decoder {
     )
 
     private val decodeThread = Thread { decodeRunnable() }
+    private val speedController = SpeedController()
 
     var surface: Surface? = null
     var dataSource: String? = null
@@ -76,6 +88,13 @@ class Decoder {
                             eof = true
                             Log.i(TAG, "queueInputBuffer: End of stream")
                         } else {
+                            // 读取下一帧后必须调用提取下一帧
+                            // 控制帧率在 30帧左右
+                            // 读取时间戳
+                            val time = extractor!!.sampleTime
+                            if(time >  0) {
+                                speedController.preRender(time)
+                            }
                             mediaCodec!!.queueInputBuffer(inputIndex, 0, sampleSize, extractor!!.sampleTime, 0)
                             extractor!!.advance()
                         }
@@ -185,7 +204,12 @@ class Decoder {
             for (i in 0..extractor.trackCount) {
                 val format = extractor.getTrackFormat(i)
                 val mime = format.getString(MediaFormat.KEY_MIME)
+                Log.e(TAG, "mime=$mime")
                 if (mime.isNullOrEmpty()) continue
+
+                if(mime.startsWith("audio/")) {
+                    Log.e(TAG, "audio found")
+                }
 
                 if (mime.startsWith(target)) {
                     return ExtractorInfo(mime, i)
