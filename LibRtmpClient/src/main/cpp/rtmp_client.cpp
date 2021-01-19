@@ -2,7 +2,9 @@
 #include <jni.h>
 #include <malloc.h>
 
+extern "C" {
 #include "librtmp/rtmp.h"
+}
 
 #include "Logger.h"
 

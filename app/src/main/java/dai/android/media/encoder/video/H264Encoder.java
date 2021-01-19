@@ -7,9 +7,13 @@ import android.util.Log;
 import android.view.Surface;
 
 import java.io.IOException;
+import java.util.List;
 
 import dai.android.media.encoder.MediaCodecInputStream;
 import dai.android.media.encoder.StreamPublisher;
+import dai.android.media.gl.ICanvasGL;
+import dai.android.media.gl.MultiTexOffScreenCanvas;
+import dai.android.media.gl.view.texture.GLTexture;
 import dai.android.media.gl.view.texture.gles.EglContextWrapper;
 
 public class H264Encoder {

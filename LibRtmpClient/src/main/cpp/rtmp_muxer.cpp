@@ -1,8 +1,10 @@
 #include <jni.h>
 #include <malloc.h>
 
+extern "C" {
 #include "librtmp/rtmp.h"
 #include "flvmuxer/flv_rtmp.h"
+}
 
 #include "Logger.h"
 
@@ -22,6 +24,7 @@ Java_dai_android_media_protocol_rtmp_RTMPMuxer_open(
     }
 
     env->ReleaseStringUTFChars(url, c_url);
+    return result;
 }
 
 extern "C" JNIEXPORT jint JNICALL

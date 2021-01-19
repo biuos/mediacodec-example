@@ -22,6 +22,7 @@ import dai.android.media.gl.filter.shap.BasicDrawShapeFilter;
 import dai.android.media.gl.filter.shap.DrawShapeFilter;
 import dai.android.media.gl.filter.texture.BasicTextureFilter;
 import dai.android.media.gl.filter.texture.TextureFilter;
+import dai.android.media.util.Loggers;
 
 /**
  * drawRect, drawLine, drawCircle --> prepareDraw --> {@link GLES20Canvas#draw}
