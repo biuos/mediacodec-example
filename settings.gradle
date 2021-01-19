@@ -1,5 +1,6 @@
 
 rootProject.name = "mediacodec-example"
 
-include ':app'
 include ':LibRtmpClient'
+include ':app'
+
