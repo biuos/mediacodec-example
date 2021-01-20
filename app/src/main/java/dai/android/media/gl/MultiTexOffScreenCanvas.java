@@ -24,7 +24,7 @@ import dai.android.media.gl.view.texture.GLTexture;
 import dai.android.media.gl.view.texture.GLViewRenderer;
 import dai.android.media.gl.view.texture.gles.EglContextWrapper;
 import dai.android.media.gl.view.texture.gles.GLThread;
-import dai.android.media.util.Loggers;
+import dai.android.debug.Logger;
 
 /**
  * OffScreenCanvas that support providing multiple textures to Camera or Media.
@@ -244,13 +244,13 @@ public abstract class MultiTexOffScreenCanvas implements GLViewRenderer {
 
     @Override
     public void onSurfaceCreated() {
-        Loggers.d("OffScreenCanvas", "onSurfaceCreated: ");
+        Logger.d("OffScreenCanvas", "onSurfaceCreated: ");
         mCanvas = new CanvasGL();
     }
 
     @Override
     public void onSurfaceChanged(int width, int height) {
-        Loggers.d("OffScreenCanvas", "onSurfaceChanged: ");
+        Logger.d("OffScreenCanvas", "onSurfaceChanged: ");
         mCanvas.setSize(width, height);
 
         if (producedTextureList.isEmpty()) {

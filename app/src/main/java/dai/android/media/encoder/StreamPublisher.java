@@ -20,7 +20,7 @@ import dai.android.media.encoder.muxer.IMuxer;
 import dai.android.media.encoder.video.H264Encoder;
 import dai.android.media.gl.view.texture.GLTexture;
 import dai.android.media.gl.view.texture.gles.EglContextWrapper;
-import dai.android.media.util.Loggers;
+import dai.android.debug.Logger;
 
 public class StreamPublisher {
 
@@ -276,7 +276,7 @@ public class StreamPublisher {
     public void start() throws IOException {
         if (!isStart) {
             if (muxer.open(param) <= 0) {
-                Loggers.e("StreamPublisher", "muxer open fail");
+                Logger.e("StreamPublisher", "muxer open fail");
                 throw new IOException("muxer open fail");
             }
             h264Encoder.start();

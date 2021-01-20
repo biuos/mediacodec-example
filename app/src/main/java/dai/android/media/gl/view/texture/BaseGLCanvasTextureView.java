@@ -14,7 +14,7 @@ import dai.android.media.gl.CanvasGL;
 import dai.android.media.gl.ICanvasGL;
 import dai.android.media.gl.OpenGLUtil;
 import dai.android.media.gl.view.GLView;
-import dai.android.media.util.Loggers;
+import dai.android.debug.Logger;
 
 /**
  * From init to run: onSizeChange --> onSurfaceTextureAvailable --> createGLThread --> createSurface --> onSurfaceCreated --> onSurfaceChanged
@@ -48,13 +48,13 @@ abstract class BaseGLCanvasTextureView extends BaseGLTextureView implements GLVi
 
     @Override
     public void onSurfaceCreated() {
-        Loggers.d(TAG, "onSurfaceCreated: ");
+        Logger.d(TAG, "onSurfaceCreated: ");
         mCanvas = new CanvasGL();
     }
 
     @Override
     public void onSurfaceChanged(int width, int height) {
-        Loggers.d(TAG, "onSurfaceChanged: ");
+        Logger.d(TAG, "onSurfaceChanged: ");
         mCanvas.setSize(width, height);
 
     }

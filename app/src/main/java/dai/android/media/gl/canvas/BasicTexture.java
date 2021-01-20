@@ -1,4 +1,3 @@
-
 package dai.android.media.gl.canvas;
 
 import android.util.Log;

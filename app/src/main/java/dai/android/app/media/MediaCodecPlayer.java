@@ -1,4 +1,4 @@
-package dai.andruid.media;
+package dai.android.app.media;
 
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
@@ -8,6 +8,7 @@ import android.view.Surface;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+
 
 class MediaCodecPlayer {
     private static final String TAG = "MediaCodecPlayer";

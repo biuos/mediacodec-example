@@ -7,7 +7,7 @@ import java.util.List;
 import dai.android.media.gl.canvas.BasicTexture;
 import dai.android.media.gl.canvas.GLCanvas;
 import dai.android.media.gl.canvas.RawTexture;
-import dai.android.media.util.Loggers;
+import dai.android.debug.Logger;
 
 /**
  * Created by Chilling on 2016/10/27.
@@ -75,7 +75,7 @@ public class FilterGroup extends BasicTextureFilter {
     @Override
     public void destroy() {
         super.destroy();
-        Loggers.d(TAG, "destroy");
+        Logger.d(TAG, "destroy");
         recycleTextures();
     }
 

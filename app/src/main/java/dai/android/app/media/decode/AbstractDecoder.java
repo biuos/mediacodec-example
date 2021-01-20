@@ -1,4 +1,4 @@
-package dai.andruid.media.decode;
+package dai.android.app.media.decode;
 
 import android.media.MediaCodec;
 import android.media.MediaExtractor;

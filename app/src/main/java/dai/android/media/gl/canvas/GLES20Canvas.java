@@ -22,7 +22,7 @@ import dai.android.media.gl.filter.shap.BasicDrawShapeFilter;
 import dai.android.media.gl.filter.shap.DrawShapeFilter;
 import dai.android.media.gl.filter.texture.BasicTextureFilter;
 import dai.android.media.gl.filter.texture.TextureFilter;
-import dai.android.media.util.Loggers;
+import dai.android.debug.Logger;
 
 /**
  * drawRect, drawLine, drawCircle --> prepareDraw --> {@link GLES20Canvas#draw}
@@ -971,7 +971,7 @@ public class GLES20Canvas implements GLCanvas {
 
     @SuppressWarnings("unused")
     public static void printMatrix(String message, float[] m, int offset) {
-        if (!Loggers.DEBUG) {
+        if (!Logger.DEBUG) {
             return;
         }
         StringBuilder b = new StringBuilder(message);
@@ -991,7 +991,7 @@ public class GLES20Canvas implements GLCanvas {
             }
             b.append('\n');
         }
-        Loggers.v(TAG, b.toString());
+        Logger.v(TAG, b.toString());
     }
 
     @Override

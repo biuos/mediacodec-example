@@ -1,11 +1,11 @@
-package dai.andruid.media.decode
+package dai.android.app.media.decode
 
 import android.media.MediaCodec
 import android.media.MediaExtractor
 import android.media.MediaFormat
 import android.util.Log
 import android.view.Surface
-import dai.andruid.media.SpeedController
+import dai.android.app.media.SpeedController
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.util.concurrent.atomic.AtomicBoolean

@@ -1,4 +1,4 @@
-package dai.andruid.media;
+package dai.android.app.media;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import dai.andruid.media.decode.Decoder1;
+import dai.android.app.media.decode.Decoder1;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity22 extends AppCompatActivity {
 
     private static final String VideoFile = "/sdcard/gangtiexia_yugao.mp4";
     private static final int PERMISSION_EXTERNAL_STORAGE = 1;
@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         permission = checkReadExternalStoragePermission();
 
-        setContentView(R.layout.activity_main);
-        surfaceView = findViewById(R.id.surfaceView);
+        //setContentView(R.layout.activity_main);
+        //surfaceView = findViewById(R.id.surfaceView);
         surfaceView.getHolder().addCallback(callback);
     }
 

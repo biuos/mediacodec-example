@@ -15,7 +15,7 @@ import java.util.List;
 import dai.android.media.gl.ICanvasGL;
 import dai.android.media.gl.view.texture.gles.EglContextWrapper;
 import dai.android.media.gl.view.texture.gles.GLThread;
-import dai.android.media.util.Loggers;
+import dai.android.debug.Logger;
 
 /**
  * Created by Chilling on 2016/10/31.
@@ -61,7 +61,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
     // TODO: 2018/3/25 This may be duplicated. onSurfaceTextureSizeChanged is doing same thing.
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        Loggers.d(TAG, "onSizeChanged: ");
+        Logger.d(TAG, "onSizeChanged: ");
         super.onSizeChanged(w, h, oldw, oldh);
         if (mGLThread != null) {
             mGLThread.onWindowResize(w, h);
@@ -133,7 +133,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
 
     @Override
     protected void onDetachedFromWindow() {
-        Loggers.d(TAG, "onDetachedFromWindow: ");
+        Logger.d(TAG, "onDetachedFromWindow: ");
         if (mGLThread != null) {
             mGLThread.requestExitAndWait();
         }
@@ -188,7 +188,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        Loggers.d(TAG, "onSurfaceTextureAvailable: ");
+        Logger.d(TAG, "onSurfaceTextureAvailable: ");
         surfaceAvailable = true;
         glThreadBuilder = new GLThread.Builder();
         if (mGLThread == null) {
@@ -207,7 +207,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
     }
 
     protected void createGLThread() {
-        Loggers.d(TAG, "createGLThread: ");
+        Logger.d(TAG, "createGLThread: ");
         if (!surfaceAvailable) {
             return;
         }
@@ -244,7 +244,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
 
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-        Loggers.d(TAG, "onSurfaceTextureSizeChanged: ");
+        Logger.d(TAG, "onSurfaceTextureSizeChanged: ");
         surfaceChanged(width, height);
         surfaceRedrawNeeded();
         if (surfaceTextureListener != null) {
@@ -257,7 +257,7 @@ abstract class BaseGLTextureView extends TextureView implements TextureView.Surf
      */
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        Loggers.d(TAG, "onSurfaceTextureDestroyed: ");
+        Logger.d(TAG, "onSurfaceTextureDestroyed: ");
         surfaceDestroyed();
         if (surfaceTextureListener != null) {
             surfaceTextureListener.onSurfaceTextureDestroyed(surface);

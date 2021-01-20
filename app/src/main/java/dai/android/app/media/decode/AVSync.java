@@ -1,4 +1,4 @@
-package dai.andruid.media.decode;
+package dai.android.app.media.decode;
 
 public class AVSync {
     public static final String TAG = "AVSync";

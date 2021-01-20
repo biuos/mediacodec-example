@@ -14,7 +14,7 @@ import java.util.List;
 
 import dai.android.media.gl.ICanvasGL;
 import dai.android.media.gl.view.texture.gles.GLThread;
-import dai.android.media.util.Loggers;
+import dai.android.debug.Logger;
 
 /**
  * Used to generate multiple textures or consume textures from others.
@@ -86,7 +86,7 @@ public abstract class GLMultiTexProducerView extends GLMultiTexConsumerView {
     @Override
     public void onSurfaceChanged(int width, int height) {
         super.onSurfaceChanged(width, height);
-        Loggers.d(TAG, "onSurfaceChanged: " + width + ", " + height);
+        Logger.d(TAG, "onSurfaceChanged: " + width + ", " + height);
         if (producedTextureList.isEmpty()) {
             for (int i = 0; i < getInitialTexCount(); i++) {
                 // This must be in this thread because it relies on the GLContext of this thread
@@ -121,7 +121,7 @@ public abstract class GLMultiTexProducerView extends GLMultiTexConsumerView {
     @Override
     public void onPause() {
         super.onPause();
-        Loggers.d(TAG, "onPause");
+        Logger.d(TAG, "onPause");
         recycleProduceTexture();
         if (mGLThread == null) {
             Log.w(TAG, "!!!!!! You may not call setShareEglContext !!!");

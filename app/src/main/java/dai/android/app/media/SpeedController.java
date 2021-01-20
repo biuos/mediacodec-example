@@ -1,4 +1,4 @@
-package dai.andruid.media;
+package dai.android.app.media;
 
 import android.util.Log;
 
