@@ -2,4 +2,7 @@
     <string name="app_name">andruid</string>
 
     <string name="permission_tips">permission needed..╮(╯▽╰)╭</string>
+
+    <string name="strGoToDownload">下载</string>
+    <string name="strStopDownload">停止</string>
 </resources>

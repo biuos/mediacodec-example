@@ -1,0 +1,10 @@
+
+BILIBILI
+
+实现 HLS 文件保存存在的问题
+
+通过存放下来的文件
+HEAD + PIECE1 + PIECE2 + PIECE3 + ... + PIECEN
+这种方式只能在 mac 的机器上进行播放, 其他例如 ffmpeg 播放都存在花屏总时长显示不全等问题, 需要保存为
+标准的 MP4 文件格式。
+

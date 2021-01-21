@@ -45,7 +45,7 @@ public class MediaCodecInputStream extends InputStream {
     @Override
     public int read(byte[] buffer, int offset, int length) throws IOException {
         int readLength;
-        int encoderStatus = -1;
+        int encoderStatus = 0;
 
         if (mBuffer == null) {
             while (!Thread.interrupted() && !mClosed) {
@@ -87,7 +87,7 @@ public class MediaCodecInputStream extends InputStream {
 
         readLength = Math.min(length, mBufferInfo.size - mBuffer.position());
         mBuffer.get(buffer, offset, readLength);
-        if (mBuffer.position() >= mBufferInfo.size) {
+        if (mBuffer.position() >= mBufferInfo.size && encoderStatus >= 0) {
             mMediaCodec.releaseOutputBuffer(encoderStatus, false);
             mBuffer = null;
         }
