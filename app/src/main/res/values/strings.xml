@@ -5,4 +5,7 @@
 
     <string name="strGoToDownload">下载</string>
     <string name="strStopDownload">停止</string>
+
+
+    <string name="settings_msg">Settings</string>
 </resources>
